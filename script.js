@@ -112,3 +112,61 @@ enquiryForm?.addEventListener("submit", (event) => {
   // Demo placeholder only. Replace with the venue's confirmed WhatsApp number before launch.
   window.open(`https://wa.me/919999999999?text=${text}`, "_blank", "noopener,noreferrer");
 });
+
+const reviewTrack = document.querySelector("[data-review-track]");
+const reviewPrevious = document.querySelector("[data-review-previous]");
+const reviewNext = document.querySelector("[data-review-next]");
+const reviewPosition = document.querySelector("[data-review-position]");
+const reviewCards = [...document.querySelectorAll(".review-card")];
+
+const updateReviewControls = () => {
+  if (!reviewTrack || !reviewCards.length) return;
+
+  const trackLeft = reviewTrack.getBoundingClientRect().left;
+  const closestIndex = reviewCards.reduce(
+    (closest, card, index) => {
+      const distance = Math.abs(card.getBoundingClientRect().left - trackLeft);
+      return distance < closest.distance ? { index, distance } : closest;
+    },
+    { index: 0, distance: Number.POSITIVE_INFINITY }
+  ).index;
+
+  reviewPosition.textContent = String(closestIndex + 1);
+  reviewPrevious.disabled = closestIndex === 0;
+  reviewNext.disabled = closestIndex === reviewCards.length - 1;
+};
+
+const scrollReviews = (direction) => {
+  if (!reviewTrack || !reviewCards.length) return;
+
+  const trackLeft = reviewTrack.getBoundingClientRect().left;
+  const currentIndex = reviewCards.reduce(
+    (closest, card, index) => {
+      const distance = Math.abs(card.getBoundingClientRect().left - trackLeft);
+      return distance < closest.distance ? { index, distance } : closest;
+    },
+    { index: 0, distance: Number.POSITIVE_INFINITY }
+  ).index;
+  const nextIndex = Math.min(
+    reviewCards.length - 1,
+    Math.max(0, currentIndex + direction)
+  );
+
+  reviewCards[nextIndex].scrollIntoView({
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    block: "nearest",
+    inline: "start",
+  });
+};
+
+reviewPrevious?.addEventListener("click", () => scrollReviews(-1));
+reviewNext?.addEventListener("click", () => scrollReviews(1));
+reviewTrack?.addEventListener("scroll", () => window.requestAnimationFrame(updateReviewControls));
+reviewTrack?.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+    event.preventDefault();
+    scrollReviews(event.key === "ArrowLeft" ? -1 : 1);
+  }
+});
+window.addEventListener("resize", updateReviewControls);
+updateReviewControls();

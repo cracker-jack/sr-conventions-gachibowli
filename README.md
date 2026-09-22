@@ -6,6 +6,9 @@ The page also displays the venue's verified Google rating and links visitors to 
 official Maps listing to read reviews, write a review, and browse visitor photos while
 preserving Google's original attribution.
 
+It includes a user-controlled carousel of 12 short, attributed excerpts from public
+five-star Google reviews. The full reviews remain on Google and are linked for context.
+
 ## Run locally
 
 ```bash

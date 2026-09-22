@@ -4,7 +4,7 @@ test.describe("Location link tests", () => {
   test("uses secure Google Maps links", async ({ page }) => {
     await page.goto("/");
     const links = page.locator('a[href*="google.com/maps"]');
-    await expect(links).toHaveCount(5);
+    await expect(links).toHaveCount(6);
 
     for (let index = 0; index < (await links.count()); index += 1) {
       const link = links.nth(index);
