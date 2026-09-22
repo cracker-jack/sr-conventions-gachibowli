@@ -2,6 +2,10 @@
 
 A responsive one-page pitch demo for SR Conventions in Gachibowli, Hyderabad. The site presents the venue through a cinematic event-production concept and guides visitors toward a WhatsApp enquiry.
 
+The page also displays the venue's verified Google rating and links visitors to the
+official Maps listing to read reviews, write a review, and browse visitor photos while
+preserving Google's original attribution.
+
 ## Run locally
 
 ```bash
@@ -18,6 +22,10 @@ npm run build
 ## Before a real launch
 
 - Replace all representative Unsplash imagery with venue-approved photography.
+- Obtain written permission before downloading or republishing photos from Google,
+  Justdial, wedding directories, photographers, or customer uploads.
+- Recheck the displayed Google rating before launch or connect an approved Google
+  Places integration so it stays current.
 - Replace the placeholder WhatsApp number in `script.js` with the confirmed venue number.
 - Verify the venue address, event offerings, operating hours, and all business copy with the owner.
 - Add approved capacity, packages, testimonials, and contact details only after confirmation.
